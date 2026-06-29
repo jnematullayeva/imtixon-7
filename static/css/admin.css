@@ -1,0 +1,13 @@
+.admin-nav { display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
+.admin-nav a { padding: .5rem 1rem; background: #fff; border-radius: 6px; text-decoration: none; color: #333; box-shadow: 0 1px 4px rgba(0,0,0,.1); }
+.admin-nav a:hover { background: #c2185b; color: #fff; }
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+.stat-card { background: #fff; padding: 1.5rem; border-radius: 10px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+.stat-card h3 { font-size: 2rem; color: #c2185b; }
+.stat-card p { color: #666; font-size: .9rem; }
+#revenue-chart { max-height: 400px; margin-top: 2rem; background: #fff; padding: 1rem; border-radius: 10px; }
+.product-form .form-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
+.product-form .form-group { margin-bottom: 1rem; }
+.product-form label { display: block; margin-bottom: .25rem; font-weight: 500; }
+.product-form input, .product-form select, .product-form textarea { width: 100%; padding: .5rem; border: 1px solid #ddd; border-radius: 6px; }
+.product-thumb { width: 48px; height: 48px; object-fit: cover; border-radius: 6px; background: #f3ece8; }

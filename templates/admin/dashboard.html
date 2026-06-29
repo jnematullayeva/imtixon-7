@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="/static/css/admin.css">{% endblock %}
+{% block content %}
+<h2>Admin Bosh Panel</h2>
+<nav class="admin-nav">
+    <a href="/admin-panel/dashboard/">Dashboard</a>
+    <a href="/admin-panel/appointments/">Bronlar</a>
+    <a href="/admin-panel/products/">Mahsulotlar</a>
+    <a href="/admin-panel/orders/">Buyurtmalar</a>
+    <a href="/admin-panel/reports/">Hisobotlar</a>
+</nav>
+<div id="dashboard-stats" class="stats-grid"></div>
+<h3>Yaqinlashayotgan bronlar</h3>
+<div id="upcoming-appointments"></div>
+<h3>Kam qolgan mahsulotlar</h3>
+<div id="low-stock"></div>
+{% endblock %}
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/static/js/admin.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => admin.loadDashboard());
+</script>
+{% endblock %}

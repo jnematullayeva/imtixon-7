@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}BeautyBook Pro{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="/" class="logo">BeautyBook Pro</a>
+            <ul class="nav-links">
+                <li><a href="/">Bosh sahifa</a></li>
+                <li><a href="/booking/">Bron qilish</a></li>
+                <li><a href="/shop/">Do'kon</a></li>
+                <li><a href="/wishlist/">Wishlist</a></li>
+                <li><a href="/orders/">Buyurtmalar</a></li>
+                <li><a href="/profile/">Profil</a></li>
+                <li id="auth-links">
+                    <a href="/login/">Kirish</a>
+                    <a href="/register/" class="btn btn-primary">Ro'yxatdan o'tish</a>
+                </li>
+                <li id="user-menu" class="hidden">
+                    <span id="user-name"></span>
+                    <button id="logout-btn" class="btn btn-outline">Chiqish</button>
+                </li>
+                <li id="admin-link" class="hidden"><a href="/admin-panel/dashboard/">Admin</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 BeautyBook Pro. Barcha huquqlar himoyalangan.</p>
+        </div>
+    </footer>
+
+    <script src="/static/js/api.js"></script>
+    <script src="/static/js/auth.js"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

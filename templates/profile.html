@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% block title %}Profil - BeautyBook Pro{% endblock %}
+{% block content %}
+<h2>Mening profilim</h2>
+<div id="profile-info" class="card"></div>
+<div id="master-panel" class="master-panel hidden">
+    <h3>Master boshqaruv</h3>
+    <div id="master-summary" class="card"></div>
+    <div id="master-appointments" class="card">
+        <h4>Bronlar</h4>
+        <div id="master-appointment-history"></div>
+    </div>
+    <div id="master-slots" class="card">
+        <h4>Bepul slotlar</h4>
+        <label for="slot-date">Sana:</label>
+        <input type="date" id="slot-date">
+        <button id="load-slots" class="btn btn-primary">Yuklash</button>
+        <div id="slots-list"></div>
+    </div>
+</div>
+<div id="client-panel">
+    <h3>Bron tarixi</h3>
+    <div id="client-appointment-history"></div>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+    if (!auth.requireAuth()) return;
+    try {
+        const profile = await api.get('/auth/profile/');
+        const profileInfo = document.getElementById('profile-info');
+        profileInfo.innerHTML = `
+            <p><strong>Ism:</strong> ${profile.first_name} ${profile.last_name}</p>
+            <p><strong>Email:</strong> ${profile.email}</p>
+            <p><strong>Telefon:</strong> ${profile.phone}</p>
+            <p><strong>Master:</strong> ${profile.is_master ? 'Ha' : 'Yo'q'}</p>`;
+
+        const history = await api.get('/auth/profile/history/');
+        const appointments = history.results || history;
+
+        if (profile.is_master) {
+            document.getElementById('master-panel').classList.remove('hidden');
+            document.getElementById('client-panel').classList.add('hidden');
+
+            const summary = await api.get('/reports/dashboard/master/');
+            const masterSummary = document.getElementById('master-summary');
+            masterSummary.innerHTML = `
+                <p><strong>Master:</strong> ${summary.master}</p>
+                <p><strong>Bugungi bronlar:</strong> ${summary.today.appointments}</p>
+                <p><strong>Tasdiqlangan:</strong> ${summary.today.confirmed}</p>
+                <p><strong>Bekor qilingan:</strong> ${summary.today.cancelled}</p>
+                <p><strong>Joriy oy bronlari:</strong> ${summary.this_month.total_appointments}</p>
+                <p><strong>Oy daromadi:</strong> ${summary.this_month.booking_revenue}</p>`;
+
+            const historyList = document.getElementById('master-appointment-history');
+            historyList.innerHTML = '';
+            if (appointments.length === 0) {
+                historyList.innerHTML = '<p>Hech qanday bron yo\'q.</p>';
+            } else {
+                appointments.forEach(a => {
+                    const clientName = a.client_name || a.client_username || 'Noma'lum';
+                    historyList.innerHTML += `<div class="card">
+                        <p>${a.service_name} — ${a.date} ${a.start_time}</p>
+                        <p>Mijoz: ${clientName} | Status: ${a.status}</p>
+                    </div>`;
+                });
+            }
+
+            const loadSlots = async () => {
+                const date = document.getElementById('slot-date').value;
+                const slotsList = document.getElementById('slots-list');
+                slotsList.innerHTML = '';
+                if (!date) {
+                    slotsList.innerHTML = '<p>Iltimos, sanani tanlang.</p>';
+                    return;
+                }
+                const slots = await api.get(`/booking/masters/${profile.master_profile_id}/free-slots/?date=${date}`);
+                if (!slots.length) {
+                    slotsList.innerHTML = '<p>Hech qanday bo\'sh slot topilmadi.</p>';
+                    return;
+                }
+                slots.forEach(slot => {
+                    slotsList.innerHTML += `<div class="slot-card">${slot.start} - ${slot.end}</div>`;
+                });
+            };
+
+            const slotDate = document.getElementById('slot-date');
+            const today = new Date().toISOString().slice(0, 10);
+            slotDate.value = today;
+            document.getElementById('load-slots').addEventListener('click', loadSlots);
+            await loadSlots();
+        } else {
+            document.getElementById('master-panel').classList.add('hidden');
+            document.getElementById('client-panel').classList.remove('hidden');
+            const historyList = document.getElementById('client-appointment-history');
+            historyList.innerHTML = '';
+            if (appointments.length === 0) {
+                historyList.innerHTML = '<p>Bron tarixi mavjud emas.</p>';
+            } else {
+                appointments.forEach(a => {
+                    const masterName = a.master_name || a.master_username || 'Noma'lum';
+                    historyList.innerHTML += `<div class="card">
+                        <p>${a.service_name} — ${a.date} ${a.start_time}</p>
+                        <p>Master: ${masterName} | Status: ${a.status}</p>
+                    </div>`;
+                });
+            }
+        }
+    } catch (e) {
+        console.error(e);
+    }
+});
+</script>
+{% endblock %}

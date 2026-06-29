@@ -1,0 +1,43 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #faf7f5; color: #333; line-height: 1.6; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+.navbar { background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.08); padding: 1rem 0; }
+.nav-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+.logo { font-size: 1.5rem; font-weight: 700; color: #c2185b; text-decoration: none; }
+.nav-links { display: flex; list-style: none; gap: 1rem; align-items: center; flex-wrap: wrap; }
+.nav-links a { text-decoration: none; color: #555; }
+.nav-links a:hover { color: #c2185b; }
+.btn { padding: .5rem 1rem; border-radius: 6px; border: none; cursor: pointer; text-decoration: none; display: inline-block; font-size: .9rem; }
+.btn-primary { background: #c2185b; color: #fff; }
+.btn-outline { background: transparent; border: 1px solid #c2185b; color: #c2185b; }
+.btn-sm { padding: .25rem .75rem; font-size: .8rem; }
+.btn-lg { padding: .75rem 1.5rem; font-size: 1rem; }
+.hero { text-align: center; padding: 4rem 0; }
+.hero h1 { font-size: 2.5rem; margin-bottom: 1rem; color: #c2185b; }
+.hero p { margin-bottom: 2rem; color: #666; }
+.section { padding: 2rem 0; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem; margin-top: 1rem; }
+.card { background: #fff; border-radius: 10px; padding: 1.5rem; box-shadow: 0 2px 12px rgba(0,0,0,.06); }
+.product-image { width: 100%; height: 180px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem; background: #f3ece8; }
+.product-image.placeholder { display: flex; align-items: center; justify-content: center; color: #999; font-size: .85rem; }
+.card.selected { border: 2px solid #c2185b; }
+.auth-form { max-width: 420px; margin: 3rem auto; background: #fff; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+.form-group { margin-bottom: 1rem; }
+.form-group label { display: block; margin-bottom: .25rem; font-weight: 500; }
+.form-group input, .form-group select, .form-group textarea { width: 100%; padding: .5rem; border: 1px solid #ddd; border-radius: 6px; }
+.error { color: #d32f2f; margin-top: .5rem; }
+.hidden { display: none !important; }
+.footer { background: #333; color: #fff; text-align: center; padding: 2rem 0; margin-top: 3rem; }
+.wizard { background: #fff; padding: 2rem; border-radius: 10px; }
+.wizard-steps { display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
+.step { padding: .5rem 1rem; background: #f0f0f0; border-radius: 20px; font-size: .85rem; }
+.step.active { background: #c2185b; color: #fff; }
+.wizard-panel { min-height: 200px; }
+.wizard-nav { display: flex; justify-content: space-between; margin-top: 2rem; }
+.filters { display: flex; gap: .5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.filters input { padding: .5rem; border: 1px solid #ddd; border-radius: 6px; }
+.badge { background: #ff9800; color: #fff; padding: .15rem .5rem; border-radius: 4px; font-size: .75rem; }
+table { width: 100%; border-collapse: collapse; background: #fff; }
+th, td { padding: .75rem; border-bottom: 1px solid #eee; text-align: left; }
+.slot-btn { padding: .5rem 1rem; margin: .25rem; border: 1px solid #c2185b; background: #fff; border-radius: 6px; cursor: pointer; }
+.slot-btn.selected { background: #c2185b; color: #fff; }

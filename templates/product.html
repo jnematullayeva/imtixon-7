@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Mahsulot - BeautyBook Pro{% endblock %}
+{% block content %}
+<div id="product-detail"></div>
+<button id="add-wishlist" class="btn btn-outline">Wishlistga qo'shish</button>
+<button id="order-now" class="btn btn-primary">Buyurtma berish</button>
+{% endblock %}
+{% block extra_js %}
+<script>
+const productId = window.location.pathname.split('/').filter(Boolean).pop();
+document.addEventListener('DOMContentLoaded', async () => {
+    const product = await api.get(`/shop/products/${productId}/`);
+    const imageUrl = api.productImageUrl(product);
+    const imageMarkup = imageUrl
+        ? `<img src="${imageUrl}" alt="${product.name}" class="product-image">`
+        : '<div class="product-image placeholder">Rasm yo\'q</div>';
+    const galleryMarkup = (product.images || []).map(img =>
+        `<img src="${api.mediaUrl(img.image)}" alt="${img.alt_text || product.name}" class="product-image" style="height:120px;margin-right:.5rem;">`
+    ).join('');
+
+    document.getElementById('product-detail').innerHTML = `
+        ${imageMarkup}
+        <h2>${product.name}</h2>
+        <p>${product.description}</p>
+        <p><strong>${product.price} so'm</strong></p>
+        <p>Stok: ${product.stock_quantity} ${product.unit}</p>
+        ${galleryMarkup ? `<div style="display:flex;flex-wrap:wrap;margin-top:1rem;">${galleryMarkup}</div>` : ''}`;
+
+    document.getElementById('add-wishlist').addEventListener('click', async () => {
+        if (!auth.requireAuth()) return;
+        await api.post('/wishlist/add/', { product_id: parseInt(productId) });
+        alert('Wishlistga qo\'shildi');
+    });
+
+    document.getElementById('order-now').addEventListener('click', async () => {
+        if (!auth.requireAuth()) return;
+        await api.post('/orders/', { items: [{ product_id: parseInt(productId), quantity: 1 }] });
+        alert('Buyurtma yaratildi');
+        window.location.href = '/orders/';
+    });
+});
+</script>
+{% endblock %}

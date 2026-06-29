@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Bron qilish - BeautyBook Pro{% endblock %}
+{% block content %}
+<h2>Bron qilish</h2>
+<div class="wizard">
+    <div class="wizard-steps">
+        <span class="step active" data-step="1">1. Kategoriya</span>
+        <span class="step" data-step="2">2. Xizmat</span>
+        <span class="step" data-step="3">3. Master va vaqt</span>
+        <span class="step" data-step="4">4. Tasdiqlash</span>
+    </div>
+    <div id="step-1" class="wizard-panel active"><div id="categories" class="grid"></div></div>
+    <div id="step-2" class="wizard-panel hidden"><div id="services" class="grid"></div></div>
+    <div id="step-3" class="wizard-panel hidden">
+        <div id="masters" class="grid"></div>
+        <input type="date" id="booking-date">
+        <div id="time-slots" class="grid"></div>
+    </div>
+    <div id="step-4" class="wizard-panel hidden">
+        <div id="confirm-summary" class="card"></div>
+        <button id="confirm-booking" class="btn btn-primary">Bron qilish</button>
+    </div>
+    <div class="wizard-nav">
+        <button id="prev-btn" class="btn btn-outline" disabled>Orqaga</button>
+        <button id="next-btn" class="btn btn-primary" disabled>Keyingi</button>
+    </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script src="/static/js/booking.js"></script>
+{% endblock %}

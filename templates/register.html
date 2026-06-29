@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Ro'yxatdan o'tish - BeautyBook Pro{% endblock %}
+{% block content %}
+<div class="auth-form">
+    <h2>Ro'yxatdan o'tish</h2>
+    <form id="register-form">
+        <div class="form-group"><label>Username</label><input type="text" id="username" required></div>
+        <div class="form-group"><label>Email</label><input type="email" id="email" required></div>
+        <div class="form-group"><label>Ism</label><input type="text" id="first_name" required></div>
+        <div class="form-group"><label>Familiya</label><input type="text" id="last_name" required></div>
+        <div class="form-group"><label>Telefon</label><input type="text" id="phone" required></div>
+        <div class="form-group"><label>Parol</label><input type="password" id="password" required></div>
+        <div class="form-group"><label>Parolni tasdiqlash</label><input type="password" id="password2" required></div>
+        <button type="submit" class="btn btn-primary">Ro'yxatdan o'tish</button>
+        <p class="error" id="register-error"></p>
+    </form>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script>
+document.getElementById('register-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = {
+        username: document.getElementById('username').value,
+        email: document.getElementById('email').value,
+        first_name: document.getElementById('first_name').value,
+        last_name: document.getElementById('last_name').value,
+        phone: document.getElementById('phone').value,
+        password: document.getElementById('password').value,
+        password2: document.getElementById('password2').value,
+    };
+    try {
+        await auth.register(data);
+        await auth.login(data.username, data.password);
+        window.location.href = '/';
+    } catch (err) {
+        document.getElementById('register-error').textContent = err.message || 'Xatolik yuz berdi';
+    }
+});
+</script>
+{% endblock %}

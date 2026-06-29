@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block title %}Admin Mahsulotlar{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="/static/css/admin.css">{% endblock %}
+{% block content %}
+<h2>Mahsulot boshqaruv</h2>
+<nav class="admin-nav">
+    <a href="/admin-panel/dashboard/">Dashboard</a>
+    <a href="/admin-panel/appointments/">Bronlar</a>
+    <a href="/admin-panel/products/">Mahsulotlar</a>
+    <a href="/admin-panel/orders/">Buyurtmalar</a>
+    <a href="/admin-panel/reports/">Hisobotlar</a>
+</nav>
+
+<section class="card" style="margin-bottom: 2rem;">
+    <h3>Yangi mahsulot qo'shish</h3>
+    <form id="product-form" class="product-form">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="product-category">Kategoriya</label>
+                <select id="product-category" required></select>
+            </div>
+            <div class="form-group">
+                <label for="product-name">Nom</label>
+                <input type="text" id="product-name" required>
+            </div>
+            <div class="form-group">
+                <label for="product-brand">Brend</label>
+                <input type="text" id="product-brand">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="product-price">Narx</label>
+                <input type="number" id="product-price" min="0" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for="product-stock">Stok</label>
+                <input type="number" id="product-stock" min="0" value="0" required>
+            </div>
+            <div class="form-group">
+                <label for="product-unit">O'lchov</label>
+                <input type="text" id="product-unit" value="dona">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="product-description">Tavsif</label>
+            <textarea id="product-description" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="product-image">Mahsulot rasmi</label>
+            <input type="file" id="product-image" accept="image/*">
+        </div>
+        <div class="form-group">
+            <label><input type="checkbox" id="product-featured"> Tanlangan mahsulot</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Saqlash</button>
+        <p id="product-form-error" class="error hidden"></p>
+    </form>
+</section>
+
+<div id="products-table"></div>
+{% endblock %}
+{% block extra_js %}
+<script src="/static/js/admin.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    admin.loadProductCategories();
+    admin.loadProducts();
+    document.getElementById('product-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        admin.createProduct();
+    });
+});
+</script>
+{% endblock %}

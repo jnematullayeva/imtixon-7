@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Do'kon - BeautyBook Pro{% endblock %}
+{% block content %}
+<h2>Mahsulotlar</h2>
+<div class="filters">
+    <input type="text" id="search" placeholder="Qidiruv...">
+    <input type="number" id="price-min" placeholder="Min narx">
+    <input type="number" id="price-max" placeholder="Max narx">
+    <button id="filter-btn" class="btn btn-primary">Filter</button>
+</div>
+<div id="products" class="grid"></div>
+<div id="pagination"></div>
+{% endblock %}
+{% block extra_js %}
+<script src="/static/js/shop.js"></script>
+{% endblock %}

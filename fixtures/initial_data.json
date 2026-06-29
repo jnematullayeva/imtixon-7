@@ -1,0 +1,615 @@
+[
+{
+  "model": "booking.servicecategory",
+  "pk": 1,
+  "fields": {
+    "name": "Soch",
+    "description": "Soch parvarishi xizmatlari",
+    "icon": "💇",
+    "is_active": true,
+    "order": 1
+  }
+},
+{
+  "model": "booking.servicecategory",
+  "pk": 2,
+  "fields": {
+    "name": "Tirnoq",
+    "description": "Manikur va pedikur",
+    "icon": "💅",
+    "is_active": true,
+    "order": 2
+  }
+},
+{
+  "model": "booking.servicecategory",
+  "pk": 3,
+  "fields": {
+    "name": "Yuz parvarishi",
+    "description": "Yuz terisi parvarishi",
+    "icon": "✨",
+    "is_active": true,
+    "order": 3
+  }
+},
+{
+  "model": "booking.servicecategory",
+  "pk": 4,
+  "fields": {
+    "name": "Massaj",
+    "description": "Massaj xizmatlari",
+    "icon": "💆",
+    "is_active": true,
+    "order": 4
+  }
+},
+{
+  "model": "booking.servicecategory",
+  "pk": 5,
+  "fields": {
+    "name": "Qoshlar",
+    "description": "Qosh va kirpik xizmatlari",
+    "icon": "👁",
+    "is_active": true,
+    "order": 5
+  }
+},
+{
+  "model": "booking.service",
+  "pk": 1,
+  "fields": {
+    "category": 1,
+    "name": "Soch kesish",
+    "description": "",
+    "duration_minutes": 30,
+    "price": "80000.00",
+    "is_active": true
+  }
+},
+{
+  "model": "booking.service",
+  "pk": 2,
+  "fields": {
+    "category": 1,
+    "name": "Soch bo'yash",
+    "description": "",
+    "duration_minutes": 90,
+    "price": "250000.00",
+    "is_active": true
+  }
+},
+{
+  "model": "booking.service",
+  "pk": 3,
+  "fields": {
+    "category": 1,
+    "name": "Fen va turmak",
+    "description": "",
+    "duration_minutes": 45,
+    "price": "120000.00",
+    "is_active": true
+  }
+},
+{
+  "model": "booking.service",
+  "pk": 4,
+  "fields": {
+    "category": 1,
+    "name": "Melirovka",
+    "description": "",
+    "duration_minutes": 120,
+    "price": "350000.00",
+    "is_active": true
+  }
+},
+{
+  "model": "booking.service",
+  "pk": 5,
+  "fields": {
+    "category": 2,
+    "name": "Manikur",
+    "description": "",
+    "duration_minutes": 45,
+    "price": "70000.00",
+    "is_active": true
+  }
+},
+{
+  "model": "booking.service",
+  "pk": 6,
+  "fields": {
+    "category": 2,
+    "name": "Pedikur",
+    "description": "",
+    "duration_minutes": 60,
+    "price": "90000.00",
+    "is_active": true
+  }
+},
+{
+  "model": "booking.service",
+  "pk": 7,
+  "fields": {
+    "category": 2,
+    "name": "Gel-lak",
+    "description": "",
+    "duration_minutes": 90,
+    "price": "150000.00",
+    "is_active": true
+  }
+},
+{
+  "model": "booking.service",
+  "pk": 8,
+  "fields": {
+    "category": 2,
+    "name": "Narashtirish",
+    "description": "",
+    "duration_minutes": 120,
+    "price": "200000.00",
+    "is_active": true
+  }
+},
+{
+  "model": "booking.service",
+  "pk": 9,
+  "fields": {
+    "category": 3,
+    "name": "Tozalash",
+    "description": "",
+    "duration_minutes": 60,
+    "price": "150000.00",
+    "is_active": true
+  }
+},
+{
+  "model": "booking.service",
+  "pk": 10,
+  "fields": {
+    "category": 3,
+    "name": "Peeling",
+    "description": "",
+    "duration_minutes": 45,
+    "price": "180000.00",
+    "is_active": true
+  }
+},
+{
+  "model": "booking.service",
+  "pk": 11,
+  "fields": {
+    "category": 3,
+    "name": "Massaj",
+    "description": "",
+    "duration_minutes": 30,
+    "price": "100000.00",
+    "is_active": true
+  }
+},
+{
+  "model": "booking.service",
+  "pk": 12,
+  "fields": {
+    "category": 4,
+    "name": "Klassik massaj",
+    "description": "",
+    "duration_minutes": 60,
+    "price": "200000.00",
+    "is_active": true
+  }
+},
+{
+  "model": "booking.service",
+  "pk": 13,
+  "fields": {
+    "category": 4,
+    "name": "Antitsellyulit",
+    "description": "",
+    "duration_minutes": 45,
+    "price": "180000.00",
+    "is_active": true
+  }
+},
+{
+  "model": "booking.service",
+  "pk": 14,
+  "fields": {
+    "category": 4,
+    "name": "Bosh massaj",
+    "description": "",
+    "duration_minutes": 30,
+    "price": "80000.00",
+    "is_active": true
+  }
+},
+{
+  "model": "booking.service",
+  "pk": 15,
+  "fields": {
+    "category": 5,
+    "name": "Qosh tuzatish",
+    "description": "",
+    "duration_minutes": 30,
+    "price": "50000.00",
+    "is_active": true
+  }
+},
+{
+  "model": "booking.service",
+  "pk": 16,
+  "fields": {
+    "category": 5,
+    "name": "Qosh bo'yash",
+    "description": "",
+    "duration_minutes": 45,
+    "price": "70000.00",
+    "is_active": true
+  }
+},
+{
+  "model": "booking.service",
+  "pk": 17,
+  "fields": {
+    "category": 5,
+    "name": "Kirpik narashtirish",
+    "description": "",
+    "duration_minutes": 90,
+    "price": "250000.00",
+    "is_active": true
+  }
+},
+{
+  "model": "booking.masterprofile",
+  "pk": 1,
+  "fields": {
+    "user": 1,
+    "bio": "Dilnoza — professional master",
+    "experience_years": 5,
+    "photo": "",
+    "is_available": true,
+    "work_start_time": "09:00:00",
+    "work_end_time": "19:00:00",
+    "break_start": null,
+    "break_end": null,
+    "specializations": [
+      1,
+      2,
+      3
+    ]
+  }
+},
+{
+  "model": "booking.masterprofile",
+  "pk": 2,
+  "fields": {
+    "user": 2,
+    "bio": "Malika — professional master",
+    "experience_years": 5,
+    "photo": "",
+    "is_available": true,
+    "work_start_time": "09:00:00",
+    "work_end_time": "19:00:00",
+    "break_start": null,
+    "break_end": null,
+    "specializations": [
+      1,
+      2,
+      3
+    ]
+  }
+},
+{
+  "model": "booking.masterprofile",
+  "pk": 3,
+  "fields": {
+    "user": 3,
+    "bio": "Nodira — professional master",
+    "experience_years": 5,
+    "photo": "",
+    "is_available": true,
+    "work_start_time": "09:00:00",
+    "work_end_time": "19:00:00",
+    "break_start": null,
+    "break_end": null,
+    "specializations": [
+      1,
+      2,
+      3
+    ]
+  }
+},
+{
+  "model": "shop.productcategory",
+  "pk": 1,
+  "fields": {
+    "name": "Shampunlar",
+    "slug": "shampunlar",
+    "description": "",
+    "image": "",
+    "is_active": true,
+    "order": 1
+  }
+},
+{
+  "model": "shop.productcategory",
+  "pk": 2,
+  "fields": {
+    "name": "Kremlar",
+    "slug": "kremlar",
+    "description": "",
+    "image": "",
+    "is_active": true,
+    "order": 2
+  }
+},
+{
+  "model": "shop.productcategory",
+  "pk": 3,
+  "fields": {
+    "name": "Lak va Bo'yoqlar",
+    "slug": "lak-va-boyoq",
+    "description": "",
+    "image": "",
+    "is_active": true,
+    "order": 3
+  }
+},
+{
+  "model": "shop.productcategory",
+  "pk": 4,
+  "fields": {
+    "name": "Asboblar",
+    "slug": "asboblar",
+    "description": "",
+    "image": "",
+    "is_active": true,
+    "order": 4
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 1,
+  "fields": {
+    "category": 1,
+    "name": "Keratin Shampun",
+    "slug": "keratin-shampun",
+    "description": "",
+    "brand": "L'Oreal",
+    "price": "85000.00",
+    "stock_quantity": 20,
+    "unit": "dona",
+    "sku": "SHAMPUNLAR-001",
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-06-29T11:22:10.113Z"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 2,
+  "fields": {
+    "category": 1,
+    "name": "Hajm beruvchi shampun",
+    "slug": "hajm-shampun",
+    "description": "",
+    "brand": "Wella",
+    "price": "72000.00",
+    "stock_quantity": 15,
+    "unit": "dona",
+    "sku": "SHAMPUNLAR-002",
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-06-29T11:22:10.118Z"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 3,
+  "fields": {
+    "category": 1,
+    "name": "Tiklovchi shampun",
+    "slug": "tiklovchi-shampun",
+    "description": "",
+    "brand": "Schwarzkopf",
+    "price": "95000.00",
+    "stock_quantity": 10,
+    "unit": "dona",
+    "sku": "SHAMPUNLAR-003",
+    "is_active": true,
+    "is_featured": false,
+    "created_at": "2026-06-29T11:22:10.123Z"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 4,
+  "fields": {
+    "category": 2,
+    "name": "Yuz kremi",
+    "slug": "yuz-kremi",
+    "description": "",
+    "brand": "Nivea",
+    "price": "65000.00",
+    "stock_quantity": 25,
+    "unit": "dona",
+    "sku": "KREMLAR-001",
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-06-29T11:22:10.132Z"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 5,
+  "fields": {
+    "category": 2,
+    "name": "Qo'l kremi",
+    "slug": "qol-kremi",
+    "description": "",
+    "brand": "Dove",
+    "price": "35000.00",
+    "stock_quantity": 30,
+    "unit": "dona",
+    "sku": "KREMLAR-002",
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-06-29T11:22:10.137Z"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 6,
+  "fields": {
+    "category": 2,
+    "name": "Tungi krem",
+    "slug": "tungi-krem",
+    "description": "",
+    "brand": "Garnier",
+    "price": "78000.00",
+    "stock_quantity": 12,
+    "unit": "dona",
+    "sku": "KREMLAR-003",
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-06-29T11:22:10.141Z"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 7,
+  "fields": {
+    "category": 3,
+    "name": "Qo'l laki",
+    "slug": "qol-laki",
+    "description": "",
+    "brand": "OPI",
+    "price": "45000.00",
+    "stock_quantity": 40,
+    "unit": "dona",
+    "sku": "LAK-VA-BOYOQ-001",
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-06-29T11:22:10.150Z"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 8,
+  "fields": {
+    "category": 3,
+    "name": "Soch bo'yog'i",
+    "slug": "soch-boyog",
+    "description": "",
+    "brand": "Matrix",
+    "price": "120000.00",
+    "stock_quantity": 8,
+    "unit": "dona",
+    "sku": "LAK-VA-BOYOQ-002",
+    "is_active": true,
+    "is_featured": false,
+    "created_at": "2026-06-29T11:22:10.156Z"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 9,
+  "fields": {
+    "category": 4,
+    "name": "Soch fen",
+    "slug": "soch-fen",
+    "description": "",
+    "brand": "Philips",
+    "price": "350000.00",
+    "stock_quantity": 5,
+    "unit": "dona",
+    "sku": "ASBOBLAR-001",
+    "is_active": true,
+    "is_featured": false,
+    "created_at": "2026-06-29T11:22:10.166Z"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 10,
+  "fields": {
+    "category": 4,
+    "name": "Yuz cho'tkasi",
+    "slug": "yuz-chotkasi",
+    "description": "",
+    "brand": "Foreo",
+    "price": "180000.00",
+    "stock_quantity": 7,
+    "unit": "dona",
+    "sku": "ASBOBLAR-002",
+    "is_active": true,
+    "is_featured": false,
+    "created_at": "2026-06-29T11:22:10.173Z"
+  }
+},
+{
+  "model": "accounts.customuser",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$w68Q8t8hDR0pA6r5CHehMZ$7dRovK0tgoENzXOLp1MRKfyzErJ5FOeFaiu8ZgBrJIQ=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "master1",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-29T11:22:10.180Z",
+    "email": "master1@beautybook.uz",
+    "first_name": "Dilnoza",
+    "last_name": "Karimova",
+    "phone": "+998901234567",
+    "date_of_birth": null,
+    "avatar": "",
+    "is_master": true,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.customuser",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$Cl0NAzMWKj9o5FF956t7HV$ire+7gL0Wzge0leP9sUHIpU9KSrcJwLO2R9YTuC+rfE=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "master2",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-29T11:22:10.706Z",
+    "email": "master2@beautybook.uz",
+    "first_name": "Malika",
+    "last_name": "Toshmatova",
+    "phone": "+998901234568",
+    "date_of_birth": null,
+    "avatar": "",
+    "is_master": true,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.customuser",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$woojuJD11TwqwH3KhNuCfX$z0Hege0426FS3K+utBqtr257XQNtjr2QM2I/6tC3Kos=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "master3",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-29T11:22:11.204Z",
+    "email": "master3@beautybook.uz",
+    "first_name": "Nodira",
+    "last_name": "Rahimova",
+    "phone": "+998901234569",
+    "date_of_birth": null,
+    "avatar": "",
+    "is_master": true,
+    "groups": [],
+    "user_permissions": []
+  }
+}
+]
