@@ -8,6 +8,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from apps.booking.models import Appointment
 from apps.booking.serializers import AppointmentSerializer
+from apps.booking.schema import profile_history_schema
 
 from .serializers import AdminUserSerializer, ProfileSerializer, RegisterSerializer
 
@@ -53,8 +54,15 @@ class ProfileView(generics.RetrieveUpdateAPIView):
 class ProfileHistoryView(generics.ListAPIView):
     serializer_class = AppointmentSerializer
     permission_classes = [IsAuthenticated]
+    pagination_class = None
+
+    @profile_history_schema
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
+        if getattr(self, 'swagger_fake_view', False):
+            return Appointment.objects.none()
         user = self.request.user
         if getattr(user, 'is_master', False) and hasattr(user, 'master_profile'):
             return Appointment.objects.filter(master=user.master_profile).select_related(

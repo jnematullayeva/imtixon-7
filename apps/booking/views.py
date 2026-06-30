@@ -1,4 +1,5 @@
 from django_filters import rest_framework as filters
+from drf_spectacular.utils import extend_schema
 from rest_framework import generics, status
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
@@ -7,6 +8,7 @@ from rest_framework.views import APIView
 from apps.accounts.permissions import IsOwnerOrAdmin
 
 from .availability import get_master_availability
+from .schema import appointment_list_schema, master_availability_schema, master_free_slots_schema
 from .models import Appointment, MasterDayOff, MasterProfile, Service, ServiceCategory
 from .serializers import (
     AdminAppointmentSerializer,
@@ -78,6 +80,7 @@ class MasterDetailView(generics.RetrieveAPIView):
 class MasterAvailabilityView(APIView):
     permission_classes = [IsAuthenticated]
 
+    @master_availability_schema
     def get(self, request, pk):
         date_str = request.query_params.get('date')
         service_id = request.query_params.get('service_id')
@@ -103,6 +106,7 @@ class MasterAvailabilityView(APIView):
 class MasterFreeSlotsView(APIView):
     permission_classes = [IsAuthenticated]
 
+    @master_free_slots_schema
     def get(self, request, pk):
         date_str = request.query_params.get('date')
         if not date_str:
@@ -159,11 +163,14 @@ class MasterFreeSlotsView(APIView):
         return Response(free_windows)
 
 
+@appointment_list_schema
 class AppointmentListCreateView(generics.ListCreateAPIView):
     serializer_class = AppointmentSerializer
     permission_classes = [CanCreateAppointment]
 
     def get_queryset(self):
+        if getattr(self, 'swagger_fake_view', False):
+            return Appointment.objects.none()
         user = self.request.user
         if user.is_staff:
             return Appointment.objects.all().select_related('master', 'service', 'client')

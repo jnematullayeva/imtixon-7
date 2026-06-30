@@ -95,6 +95,14 @@ class AppointmentSerializer(serializers.ModelSerializer):
             end_time = end_dt.time()
             attrs['end_time'] = end_time
 
+            if Appointment.objects.filter(
+                master=master,
+                date=date,
+                start_time=start_time,
+                status__in=['pending', 'confirmed'],
+            ).exclude(pk=self.instance.pk if self.instance else None).exists():
+                raise serializers.ValidationError('Bu sana band qilingan.')
+
             if check_appointment_conflict(
                 master=master,
                 date=date,
@@ -118,10 +126,29 @@ class AppointmentCancelSerializer(serializers.ModelSerializer):
 
 
 class AdminAppointmentSerializer(serializers.ModelSerializer):
+    client_name = serializers.SerializerMethodField()
+    client_phone = serializers.CharField(source='client.phone', read_only=True)
+    client_email = serializers.CharField(source='client.email', read_only=True)
+    master_name = serializers.SerializerMethodField()
+    service_name = serializers.CharField(source='service.name', read_only=True)
+    service_price = serializers.DecimalField(source='service.price', max_digits=8, decimal_places=2, read_only=True)
+
     class Meta:
         model = Appointment
         fields = [
-            'id', 'client', 'master', 'service', 'date', 'start_time',
-            'end_time', 'status', 'notes', 'created_at', 'updated_at',
-            'cancelled_by', 'cancellation_reason',
+            'id', 'client', 'client_name', 'client_phone', 'client_email',
+            'master', 'master_name', 'service', 'service_name', 'service_price',
+            'date', 'start_time', 'end_time', 'status', 'notes',
+            'created_at', 'updated_at', 'cancelled_by', 'cancellation_reason',
         ]
+
+    def get_client_name(self, obj):
+        client = obj.client
+        full_name = client.get_full_name()
+        return full_name if full_name.strip() else client.username
+
+    def get_master_name(self, obj):
+        master = obj.master.user
+        full_name = master.get_full_name()
+        return full_name if full_name.strip() else master.username
+

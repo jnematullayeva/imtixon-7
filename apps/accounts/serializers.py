@@ -30,7 +30,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    master_profile_id = serializers.IntegerField(source='master_profile.id', read_only=True)
+    master_profile_id = serializers.SerializerMethodField()
 
     class Meta:
         model = User
@@ -40,6 +40,10 @@ class ProfileSerializer(serializers.ModelSerializer):
             'master_profile_id', 'is_active', 'is_staff', 'date_joined',
         ]
         read_only_fields = ['id', 'username', 'is_master', 'is_staff', 'is_active', 'date_joined']
+
+    def get_master_profile_id(self, obj):
+        profile = getattr(obj, 'master_profile', None)
+        return profile.id if profile else None
 
 
 class AdminUserSerializer(serializers.ModelSerializer):

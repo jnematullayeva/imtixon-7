@@ -9,6 +9,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui-alt'),
     path('api/auth/', include('apps.accounts.urls')),
     path('api/booking/', include('apps.booking.urls')),
     path('api/shop/', include('apps.shop.urls')),
@@ -28,11 +29,11 @@ urlpatterns = [
     path('product/<int:pk>/', TemplateView.as_view(template_name='product.html'), name='product'),
     path('wishlist/', TemplateView.as_view(template_name='wishlist.html'), name='wishlist'),
     path('orders/', TemplateView.as_view(template_name='orders.html'), name='orders'),
-    path('admin-panel/dashboard/', TemplateView.as_view(template_name='admin/dashboard.html'), name='admin-dashboard'),
-    path('admin-panel/appointments/', TemplateView.as_view(template_name='admin/appointments.html'), name='admin-appointments'),
-    path('admin-panel/products/', TemplateView.as_view(template_name='admin/products.html'), name='admin-products'),
-    path('admin-panel/orders/', TemplateView.as_view(template_name='admin/orders.html'), name='admin-orders'),
-    path('admin-panel/reports/', TemplateView.as_view(template_name='admin/reports.html'), name='admin-reports'),
+    path('admin1/', TemplateView.as_view(template_name='admin/dashboard.html'), name='admin-dashboard'),
+    path('admin1/appointments/', TemplateView.as_view(template_name='admin/appointments.html'), name='admin-appointments'),
+    path('admin1/products/', TemplateView.as_view(template_name='admin/products.html'), name='admin-products'),
+    path('admin1/orders/', TemplateView.as_view(template_name='admin/orders.html'), name='admin-orders'),
+    path('admin1/reports/', TemplateView.as_view(template_name='admin/reports.html'), name='admin-reports'),
 ]
 
 if settings.DEBUG:

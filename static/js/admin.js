@@ -41,21 +41,79 @@ const admin = {
         if (!this.requireAdmin()) return;
         const data = await api.get('/admin/appointments/');
         const container = document.getElementById('appointments-table');
-        const rows = (data.results || data).map(a =>
-            `<tr><td>${a.id}</td><td>${a.date}</td><td>${a.start_time}</td><td>${a.status}</td>
-            <td><select onchange="admin.updateAppointmentStatus(${a.id}, this.value)">
-                <option value="pending" ${a.status==='pending'?'selected':''}>pending</option>
-                <option value="confirmed" ${a.status==='confirmed'?'selected':''}>confirmed</option>
-                <option value="cancelled" ${a.status==='cancelled'?'selected':''}>cancelled</option>
-                <option value="completed" ${a.status==='completed'?'selected':''}>completed</option>
-                <option value="no_show" ${a.status==='no_show'?'selected':''}>no_show</option>
-            </select></td></tr>`
-        ).join('');
-        container.innerHTML = `<table><thead><tr><th>ID</th><th>Sana</th><th>Vaqt</th><th>Status</th><th>O'zgartirish</th></tr></thead><tbody>${rows}</tbody></table>`;
+        const rows = (data.results || data).map(a => {
+            const clientName = a.client_name || 'Noma\'lum mijoz';
+            const clientPhone = a.client_phone || 'Kiritilmagan';
+            const clientEmail = a.client_email || 'Kiritilmagan';
+            const serviceName = a.service_name || 'Noma\'lum xizmat';
+            const servicePrice = a.service_price ? parseFloat(a.service_price).toLocaleString() + ' so\'m' : '0 so\'m';
+            const masterName = a.master_name || 'Noma\'lum master';
+            
+            return `<tr>
+                <td>${a.id}</td>
+                <td>
+                    <div class="client-info">
+                        <strong class="client-name">${clientName}</strong>
+                        <span class="client-phone">📞 ${clientPhone}</span>
+                        <span class="client-email">✉️ ${clientEmail}</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="service-info">
+                        <strong>${serviceName}</strong>
+                        <span class="service-price">${servicePrice}</span>
+                    </div>
+                </td>
+                <td><strong>${masterName}</strong></td>
+                <td>
+                    <div class="date-time-info">
+                        <span class="date">${a.date}</span>
+                        <span class="time">${a.start_time.substring(0, 5)} - ${a.end_time.substring(0, 5)}</span>
+                    </div>
+                </td>
+                <td>
+                    <span class="status-badge status-${a.status}">${a.status}</span>
+                </td>
+                <td>
+                    <select class="status-select" onchange="admin.updateAppointmentStatus(${a.id}, this.value)">
+                        <option value="pending" ${a.status==='pending'?'selected':''}>pending</option>
+                        <option value="confirmed" ${a.status==='confirmed'?'selected':''}>confirmed</option>
+                        <option value="cancelled" ${a.status==='cancelled'?'selected':''}>cancelled</option>
+                        <option value="completed" ${a.status==='completed'?'selected':''}>completed</option>
+                        <option value="no_show" ${a.status==='no_show'?'selected':''}>no_show</option>
+                    </select>
+                </td>
+            </tr>`;
+        }).join('');
+        
+        container.innerHTML = `
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Mijoz ma'lumotlari</th>
+                            <th>Xizmat</th>
+                            <th>Master (Usta)</th>
+                            <th>Sana va Vaqt</th>
+                            <th>Status</th>
+                            <th>O'zgartirish</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${rows}
+                    </tbody>
+                </table>
+            </div>`;
     },
 
     async updateAppointmentStatus(id, status) {
-        await api.patch(`/admin/appointments/${id}/`, { status });
+        try {
+            await api.patch(`/admin/appointments/${id}/`, { status });
+            await this.loadAppointments();
+        } catch (e) {
+            alert('Statusni yangilashda xatolik yuz berdi: ' + e.message);
+        }
     },
 
     async loadProductCategories() {

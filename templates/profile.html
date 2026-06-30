@@ -27,44 +27,64 @@
 <script>
 document.addEventListener('DOMContentLoaded', async () => {
     if (!auth.requireAuth()) return;
+
+    function parseAppointments(history) {
+        return Array.isArray(history) ? history : (history.results || []);
+    }
+
+    function renderAppointmentHistory(container, appointments, role) {
+        container.innerHTML = '';
+        if (appointments.length === 0) {
+            container.innerHTML = role === 'master'
+                ? '<p>Hech qanday bron yo\'q.</p>'
+                : '<p>Bron tarixi mavjud emas.</p>';
+            return;
+        }
+        appointments.forEach(a => {
+            const time = (a.start_time || '').slice(0, 5);
+            const personLabel = role === 'master'
+                ? `Mijoz: ${a.client_name || a.client_username || "Noma'lum"}`
+                : `Master: ${a.master_name || a.master_username || "Noma'lum"}`;
+            container.innerHTML += `<div class="card">
+                <p>${a.service_name} — ${a.date} ${time}</p>
+                <p>${personLabel} | Status: ${a.status}</p>
+            </div>`;
+        });
+    }
+
     try {
         const profile = await api.get('/auth/profile/');
-        const profileInfo = document.getElementById('profile-info');
-        profileInfo.innerHTML = `
+        document.getElementById('profile-info').innerHTML = `
             <p><strong>Ism:</strong> ${profile.first_name} ${profile.last_name}</p>
             <p><strong>Email:</strong> ${profile.email}</p>
             <p><strong>Telefon:</strong> ${profile.phone}</p>
             <p><strong>Master:</strong> ${profile.is_master ? 'Ha' : 'Yo'q'}</p>`;
 
         const history = await api.get('/auth/profile/history/');
-        const appointments = history.results || history;
+        const appointments = parseAppointments(history);
 
         if (profile.is_master) {
             document.getElementById('master-panel').classList.remove('hidden');
             document.getElementById('client-panel').classList.add('hidden');
+            renderAppointmentHistory(
+                document.getElementById('master-appointment-history'),
+                appointments,
+                'master'
+            );
 
-            const summary = await api.get('/reports/dashboard/master/');
-            const masterSummary = document.getElementById('master-summary');
-            masterSummary.innerHTML = `
-                <p><strong>Master:</strong> ${summary.master}</p>
-                <p><strong>Bugungi bronlar:</strong> ${summary.today.appointments}</p>
-                <p><strong>Tasdiqlangan:</strong> ${summary.today.confirmed}</p>
-                <p><strong>Bekor qilingan:</strong> ${summary.today.cancelled}</p>
-                <p><strong>Joriy oy bronlari:</strong> ${summary.this_month.total_appointments}</p>
-                <p><strong>Oy daromadi:</strong> ${summary.this_month.booking_revenue}</p>`;
-
-            const historyList = document.getElementById('master-appointment-history');
-            historyList.innerHTML = '';
-            if (appointments.length === 0) {
-                historyList.innerHTML = '<p>Hech qanday bron yo\'q.</p>';
-            } else {
-                appointments.forEach(a => {
-                    const clientName = a.client_name || a.client_username || 'Noma'lum';
-                    historyList.innerHTML += `<div class="card">
-                        <p>${a.service_name} — ${a.date} ${a.start_time}</p>
-                        <p>Mijoz: ${clientName} | Status: ${a.status}</p>
-                    </div>`;
-                });
+            try {
+                const summary = await api.get('/reports/dashboard/master/');
+                document.getElementById('master-summary').innerHTML = `
+                    <p><strong>Master:</strong> ${summary.master}</p>
+                    <p><strong>Bugungi bronlar:</strong> ${summary.today.appointments}</p>
+                    <p><strong>Tasdiqlangan:</strong> ${summary.today.confirmed}</p>
+                    <p><strong>Bekor qilingan:</strong> ${summary.today.cancelled}</p>
+                    <p><strong>Joriy oy bronlari:</strong> ${summary.this_month.total_appointments}</p>
+                    <p><strong>Oy daromadi:</strong> ${summary.this_month.booking_revenue}</p>`;
+            } catch (e) {
+                console.error(e);
+                document.getElementById('master-summary').innerHTML =
+                    '<p>Statistikani yuklab bo\'lmadi.</p>';
             }
 
             const loadSlots = async () => {
@@ -75,40 +95,41 @@ document.addEventListener('DOMContentLoaded', async () => {
                     slotsList.innerHTML = '<p>Iltimos, sanani tanlang.</p>';
                     return;
                 }
-                const slots = await api.get(`/booking/masters/${profile.master_profile_id}/free-slots/?date=${date}`);
-                if (!slots.length) {
-                    slotsList.innerHTML = '<p>Hech qanday bo\'sh slot topilmadi.</p>';
-                    return;
+                try {
+                    const slots = await api.get(
+                        `/booking/masters/${profile.master_profile_id}/free-slots/?date=${date}`
+                    );
+                    const slotList = Array.isArray(slots) ? slots : (slots.results || []);
+                    if (!slotList.length) {
+                        slotsList.innerHTML = '<p>Hech qanday bo\'sh slot topilmadi.</p>';
+                        return;
+                    }
+                    slotList.forEach(slot => {
+                        slotsList.innerHTML += `<div class="slot-card">${slot.start} - ${slot.end}</div>`;
+                    });
+                } catch (e) {
+                    console.error(e);
+                    slotsList.innerHTML = '<p>Slotlarni yuklab bo\'lmadi.</p>';
                 }
-                slots.forEach(slot => {
-                    slotsList.innerHTML += `<div class="slot-card">${slot.start} - ${slot.end}</div>`;
-                });
             };
 
             const slotDate = document.getElementById('slot-date');
-            const today = new Date().toISOString().slice(0, 10);
-            slotDate.value = today;
+            slotDate.value = new Date().toISOString().slice(0, 10);
             document.getElementById('load-slots').addEventListener('click', loadSlots);
             await loadSlots();
         } else {
             document.getElementById('master-panel').classList.add('hidden');
             document.getElementById('client-panel').classList.remove('hidden');
-            const historyList = document.getElementById('client-appointment-history');
-            historyList.innerHTML = '';
-            if (appointments.length === 0) {
-                historyList.innerHTML = '<p>Bron tarixi mavjud emas.</p>';
-            } else {
-                appointments.forEach(a => {
-                    const masterName = a.master_name || a.master_username || 'Noma'lum';
-                    historyList.innerHTML += `<div class="card">
-                        <p>${a.service_name} — ${a.date} ${a.start_time}</p>
-                        <p>Master: ${masterName} | Status: ${a.status}</p>
-                    </div>`;
-                });
-            }
+            renderAppointmentHistory(
+                document.getElementById('client-appointment-history'),
+                appointments,
+                'client'
+            );
         }
     } catch (e) {
         console.error(e);
+        document.getElementById('profile-info').innerHTML =
+            '<p>Profil ma\'lumotlarini yuklab bo\'lmadi.</p>';
     }
 });
 </script>

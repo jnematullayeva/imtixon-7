@@ -129,14 +129,18 @@ const booking = {
     },
 
     async confirm() {
-        await api.post('/booking/appointments/', {
-            master: this.state.master.id,
-            service: this.state.service.id,
-            date: this.state.date,
-            start_time: this.state.slot.start,
-        });
-        alert('Bron muvaffaqiyatli yaratildi!');
-        window.location.href = '/profile/';
+        try {
+            await api.post('/booking/appointments/', {
+                master: this.state.master.id,
+                service: this.state.service.id,
+                date: this.state.date,
+                start_time: this.state.slot.start,
+            });
+            alert('Bron muvaffaqiyatli yaratildi!');
+            window.location.href = '/profile/';
+        } catch (e) {
+            alert(e.message || 'Bron yaratib bo\'lmadi.');
+        }
     },
 };
 
